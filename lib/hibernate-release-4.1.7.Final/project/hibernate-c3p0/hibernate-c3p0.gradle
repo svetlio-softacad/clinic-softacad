@@ -1,0 +1,11 @@
+dependencies {
+    provided( libraries.validation )
+    compile project( ':hibernate-core' )
+    compile( libraries.c3p0 )
+
+    testCompile( libraries.validator ) {
+        // for test runtime
+        transitive = true
+    }
+    testCompile project( ':hibernate-testing' )
+}
