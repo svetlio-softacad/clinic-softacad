@@ -4,12 +4,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PATIENTS")
-@PrimaryKeyJoinColumn(name = "PATIENT_ID")
+@PrimaryKeyJoinColumn(name = "ID")
 public class Patient extends Person {
 	
 	@Column(name = "AGE", nullable = false)
@@ -18,6 +19,7 @@ public class Patient extends Person {
 	@Column(name = "EGN", nullable = false, length = 25)
 	private String egn;
 	
+	@OneToMany(mappedBy = "patient")
 	private List<Visit> visits;
 	
 	public int getAge() {
