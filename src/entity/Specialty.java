@@ -20,7 +20,7 @@ public class Specialty implements Persistable {
 	
 	@Column(name = "NAME", nullable = false, length = 20)
 	private String name;
-	
+
 	public long getId() {
 		return id;
 	}

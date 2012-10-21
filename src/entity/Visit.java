@@ -2,11 +2,15 @@ package entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.SequenceGenerator;
 
@@ -18,6 +22,14 @@ public class Visit implements Persistable {
 	@SequenceGenerator(name = "VISITS_SEQ_GEN", sequenceName = "VISITS_SEQ")
 	@Column(name = "ID")
 	private long id;
+	
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "DOCTOR_ID")
+	private Doctor doctor;
+	
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "PATIENT_ID")
+	private Patient patient;
 	
 	@Column(name = "DATE", nullable = false)
 	private Date date;
@@ -51,6 +63,18 @@ public class Visit implements Persistable {
 	}
 	public void setDiagnose(String diagnose) {
 		this.diagnose = diagnose;
+	}
+	public Doctor getDoctor() {
+		return doctor;
+	}
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 	
 }
