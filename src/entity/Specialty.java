@@ -1,10 +1,14 @@
 package entity;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,6 +24,9 @@ public class Specialty implements Persistable {
 	
 	@Column(name = "NAME", nullable = false, length = 20)
 	private String name;
+	
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = Doctor.class,mappedBy = "specialties")
+	private Set<Doctor> doctors;
 
 	public long getId() {
 		return id;

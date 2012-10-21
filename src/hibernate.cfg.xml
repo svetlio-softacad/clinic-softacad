@@ -13,5 +13,12 @@
 		<!-- List of hibernate mappings references -->
 		<!-- <mapping resource="pathToMappingFile1" />-->
 		<!-- <mapping resource="pathToMappingFile2" />-->
+		<mapping package="entity" />
+		<mapping class="entity.Person" />		
+		<mapping class="entity.Doctor" />
+		<mapping class="entity.Patient" />
+		<mapping class="entity.Title" />
+		<mapping class="entity.Specialty" />
+		<mapping class="entity.Visit" />
 	</session-factory>
 </hibernate-configuration>
