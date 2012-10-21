@@ -2,6 +2,7 @@ package util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -19,7 +20,7 @@ public final class HibernateUtil {
 		try {
 			// Try to load the Hibernate settings from hibernate.cfg.xml and
 			// hibernate.properties. This creates session factory
-			Configuration configuration = new Configuration();
+			Configuration configuration = new AnnotationConfiguration();
 			configuration.configure();
 			SESSION_FACTORY = configuration.buildSessionFactory();
 		} catch (Throwable e) {
