@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@Table(name = "VISTIS")
+@Table(name = "VISITS")
 public class Visit implements Persistable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VISITS_SEQ_GEN")
