@@ -23,10 +23,24 @@ public class Doctor extends Person {
 	
 	@OneToMany(mappedBy = "doctor")
 	private List<Visit> visits;
-	
+
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE },targetEntity = Specialty.class)
 	@JoinTable(name = "DOCTORS_SPECIALTIES",joinColumns = @JoinColumn(name = "DOCTOR_ID"),inverseJoinColumns = @JoinColumn(name = "SPECIALTY_ID"))
 	private Set<Specialty> specialties;
+		
+	public List<Visit> getVisits() {
+		return visits;
+	}
+	
+	public void setVisits(List<Visit> visits) {
+		this.visits = visits;
+	}
+	public Set<Specialty> getSpecialties() {
+		return specialties;
+	}
+	public void setSpecialties(Set<Specialty> specialties) {
+		this.specialties = specialties;
+	}
 	
 	public Title getTitle() {
 		return title;

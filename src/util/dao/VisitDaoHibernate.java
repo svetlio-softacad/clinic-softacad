@@ -1,8 +1,14 @@
 package util.dao;
 
+import java.util.Date;
+import java.util.Set;
+
+import dao.VisitsDao;
+import entity.Doctor;
+import entity.Patient;
 import entity.Visit;
 
-public class VisitDaoHibernate extends GenericDaoHibernate<Visit>{
+public class VisitDaoHibernate extends GenericDaoHibernate<Visit> implements VisitsDao{
 	
 	private static VisitDaoHibernate instance;
 
@@ -15,6 +21,18 @@ public class VisitDaoHibernate extends GenericDaoHibernate<Visit>{
 
 	protected VisitDaoHibernate(Class<Visit> pojoClass) {
 		super(pojoClass);
+	}
+
+	@Override
+	public Set<Visit> find_all_by_doctor(Doctor doctor, Date from, Date to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Visit> find_all_by_patient(Patient patient, Date from, Date to) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

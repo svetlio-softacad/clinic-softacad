@@ -22,6 +22,14 @@ public class Patient extends Person {
 	@OneToMany(mappedBy = "patient")
 	private List<Visit> visits;
 	
+	public List<Visit> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<Visit> visits) {
+		this.visits = visits;
+	}
+
 	public int getAge() {
 		return age;
 	}

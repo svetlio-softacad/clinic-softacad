@@ -18,7 +18,7 @@ public class GenericDaoHibernate<T extends Persistable> implements Daoable<T> {
 
 	protected Logger logger = Logger.getLogger(GenericDaoHibernate.class);
 	
-	private Class<T> pojoClass;
+	protected Class<T> pojoClass;
 
 	protected GenericDaoHibernate(Class<T> pojoClass) {
 		this.pojoClass = pojoClass;
@@ -50,15 +50,70 @@ public class GenericDaoHibernate<T extends Persistable> implements Daoable<T> {
 	}
 
 	@Override
-	public T find(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public T find(long id) throws DataAccessException {
+		T entity = null;
+		Session session = HibernateUtil.getSession();
+		try {
+				logger.info("Fething " + this.pojoClass + " instance with id "
+						+ id);
+				session.beginTransaction();
+				entity = ((T) session.get(this.pojoClass, id));
+				session.getTransaction().commit();
+			} catch (HibernateException e) {
+				session.getTransaction().rollback();
+				logger.error("Error while searching entity of type "
+						+ this.pojoClass.getCanonicalName() + "by primary key", e);
+				throw new DataAccessException(
+						"Error while searching by primary key", e);
+			}
+			return entity;
 	}
 
 	@Override
-	public void save(T entity) {
-		// TODO Auto-generated method stub
-		
+	public void save(T entity) throws DataAccessException {
+
+		Session session = HibernateUtil.getSession();
+
+		try {
+
+			logger.info("Saving " + this.pojoClass.getCanonicalName()
+
+					+ " instance");
+
+			session.beginTransaction();
+
+			session.saveOrUpdate(entity);
+
+			session.getTransaction().commit();
+
+		} catch (HibernateException e) {
+
+			session.getTransaction().rollback();
+
+			logger.error(
+					"Error while saving entity of class "
+
+							+ this.pojoClass.getCanonicalName(), e);
+
+			throw new DataAccessException("Error while saving entity", e);
+		}
 	}
 
+
+	@Override
+	public void delete(T entity) throws DataAccessException {
+		Session session = HibernateUtil.getSession();
+		try {
+			logger.info("Deleting " + this.pojoClass.getCanonicalName()
+					+ " instance");
+			session.beginTransaction();
+			session.delete(entity);
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			session.getTransaction().rollback();
+			logger.error("Error while deleting entity of class "
+					+ this.pojoClass.getCanonicalName(), e);
+			throw new DataAccessException("Error while deleting entity", e);
+		}
+	}
 }

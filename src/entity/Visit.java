@@ -21,16 +21,16 @@ public class Visit implements Persistable {
 	@SequenceGenerator(name = "VISITS_SEQ_GEN", sequenceName = "VISITS_SEQ")
 	@Column(name = "ID")
 	private long id;
+		
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "PATIENT_ID")
+	private Patient patient;
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "DOCTOR_ID")
 	private Doctor doctor;
 	
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "PATIENT_ID")
-	private Patient patient;
-	
-	@Column(name = "DATE", nullable = false)
+	@Column(name = "DATE_OF_VISIT", nullable = false)
 	private Date date;
 	
 	@Column(name = "DIAGNOSE", nullable = false, length = 50)

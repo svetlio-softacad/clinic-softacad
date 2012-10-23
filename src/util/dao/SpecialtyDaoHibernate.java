@@ -1,8 +1,9 @@
 package util.dao;
 
+import dao.SpcialtiesDao;
 import entity.Specialty;
 
-public class SpecialtyDaoHibernate extends GenericDaoHibernate<Specialty>{
+public class SpecialtyDaoHibernate extends GenericDaoHibernate<Specialty> implements SpcialtiesDao{
 	
 	private static SpecialtyDaoHibernate instance;
 
