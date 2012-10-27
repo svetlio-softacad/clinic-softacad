@@ -7,7 +7,7 @@ import entity.*;
 
 public interface VisitsDao extends Daoable<Visit> {
 	
-	Set<Visit> find_all_by_doctor(Doctor doctor, Date from, Date to);
-	Set<Visit> find_all_by_patient(Patient patient, Date from, Date to);
+	Set<Visit> findAllByDoctor(Doctor doctor, Date from, Date to);
+	Set<Visit> findAllByPatient(Patient patient, Date from, Date to);
 
 }

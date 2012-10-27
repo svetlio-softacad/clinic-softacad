@@ -24,13 +24,13 @@ public class VisitDaoHibernate extends GenericDaoHibernate<Visit> implements Vis
 	}
 
 	@Override
-	public Set<Visit> find_all_by_doctor(Doctor doctor, Date from, Date to) {
+	public Set<Visit> findAllByDoctor(Doctor doctor, Date from, Date to) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Visit> find_all_by_patient(Patient patient, Date from, Date to) {
+	public Set<Visit> findAllByPatient(Patient patient, Date from, Date to) {
 		// TODO Auto-generated method stub
 		return null;
 	}

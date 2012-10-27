@@ -7,8 +7,8 @@ import entity.Patient;
 
 public interface PatientsDao extends Daoable<Patient>{
 	
-	Set<Patient> find_all_by_doctor(Doctor doctor);
-	Set<Patient> find_all_by_diagnose(String diagnose);
-	Set<Patient> find_all_with_expensive_visit(double visitCostsAtLeast);
+	Set<Patient> findAllByDoctor(Doctor doctor) throws DataAccessException;
+	Set<Patient> findAllByDiagnose(String diagnose);
+	Set<Patient> findAllWithExpensiveVisit(double visitCostsAtLeast);
 
 }
