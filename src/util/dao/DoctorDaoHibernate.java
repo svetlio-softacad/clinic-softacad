@@ -1,16 +1,10 @@
 package util.dao;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-
-import util.HibernateUtil;
 
 import dao.DataAccessException;
 import dao.DoctorsDao;
@@ -33,8 +27,17 @@ public class DoctorDaoHibernate extends GenericDaoHibernate<Doctor> implements D
 	}
 
 	@Override
-	public Set<Doctor> findAllByPatient(Patient patient, Date from, Date to) throws DataAccessException {
-		return findByConditionsWithOther("select d from Doctor d inner join d.visits v where v.patient.id = :id", patient.getId());
+	public Set<Doctor> findAllByPatient(final Patient patient, Date from, Date to) throws DataAccessException {
+		//return findByConditionsWithOther("select d from Doctor d inner join d.visits v where v.patient.id = :id", patient.getId());
+		return findByCallback(new DaoCallBackVisitor() {
+			
+			@Override
+			public Query visit(Session session) {
+				Query query = session.createQuery("select d from Doctor d inner join d.visits v where v.patient.id = :id");
+				query.setLong("id", patient.getId());
+				return query;
+			}
+		});
 	}
 
 }

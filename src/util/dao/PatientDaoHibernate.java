@@ -26,8 +26,16 @@ public class PatientDaoHibernate extends GenericDaoHibernate<Patient> implements
 	}
 
 	@Override
-	public Set<Patient> findAllByDoctor(Doctor doctor) throws DataAccessException {
-		return findByConditionsWithOther("select p from Patient p inner join p.visits v where v.doctor.id = :id", doctor.getId());
+	public Set<Patient> findAllByDoctor(final Doctor doctor) throws DataAccessException {
+		return findByCallback(new DaoCallBackVisitor() {
+
+			@Override
+			public Query visit(Session session) {
+				Query query = session.createQuery("select p from Patient p inner join p.visits v where v.doctor.id = :id");
+				query.setLong("id", doctor.getId());
+				return query;
+			}
+		});
 	}
 
 	@Override
@@ -37,7 +45,7 @@ public class PatientDaoHibernate extends GenericDaoHibernate<Patient> implements
 			@Override
 			public Query visit(Session session) {
 				String searchDiagnose = diagnose; 
-				Query query = session.createQuery("select p Patient p inner join p.visits v where v.diagnose like :diagnose escape '\\'");
+				Query query = session.createQuery("select p from Patient p inner join p.visits v where v.diagnose like :diagnose escape '\\'");
 				searchDiagnose = searchDiagnose.replace("\\", "\\\\");
 				searchDiagnose = searchDiagnose.replace("%", "\\%");
 				searchDiagnose = searchDiagnose.replace("_", "\\_");
@@ -48,9 +56,16 @@ public class PatientDaoHibernate extends GenericDaoHibernate<Patient> implements
 	}
 
 	@Override
-	public Set<Patient> findAllWithExpensiveVisit(double visitCostsAtLeast) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Patient> findAllWithExpensiveVisit(final double visitCostsAtLeast) throws DataAccessException {
+		return findByCallback(new DaoCallBackVisitor() {
+			
+			@Override
+			public Query visit(Session session) {
+				Query query = session.createQuery("select p from Patient p inner join p.visits v where v.price > :price");
+				query.setDouble("price", visitCostsAtLeast);
+				return query;
+			}
+		});
 	}
 
 }

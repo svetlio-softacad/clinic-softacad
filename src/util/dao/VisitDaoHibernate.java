@@ -3,6 +3,10 @@ package util.dao;
 import java.util.Date;
 import java.util.Set;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import dao.DataAccessException;
 import dao.VisitsDao;
 import entity.Doctor;
 import entity.Patient;
@@ -24,15 +28,33 @@ public class VisitDaoHibernate extends GenericDaoHibernate<Visit> implements Vis
 	}
 
 	@Override
-	public Set<Visit> findAllByDoctor(Doctor doctor, Date from, Date to) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Visit> findAllByDoctor(final Doctor doctor, final Date from, final Date to) throws DataAccessException {
+		return findByCallback(new DaoCallBackVisitor() {
+			
+			@Override
+			public Query visit(Session session) {
+			 Query query = session.createQuery("from Visit v where v.date > :from and date < :to and v.doctor.id = :id ");
+			 query.setDate("from", from);
+			 query.setDate("to", to);
+			 query.setLong("id", doctor.getId());
+			 return query;
+			}
+		});
 	}
 
 	@Override
-	public Set<Visit> findAllByPatient(Patient patient, Date from, Date to) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Visit> findAllByPatient(final Patient patient, final Date from, final Date to) throws DataAccessException {
+		return findByCallback(new DaoCallBackVisitor() {
+			
+			@Override
+			public Query visit(Session session) {
+				Query query = session.createQuery("from Visit v where v.date between :from and :to and v.patient.id = :id");
+				query.setDate("from", from);
+				 query.setDate("to", to);
+				 query.setLong("id", patient.getId());
+				 return query;
+			}
+		});
 	}
 
 }

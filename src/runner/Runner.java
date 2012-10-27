@@ -1,5 +1,7 @@
 package runner;
 
+import java.util.Date;
+
 import dao.DataAccessException;
 import entity.Doctor;
 import entity.Patient;
@@ -19,12 +21,13 @@ public class Runner {
 	 */
 	public static void main(String[] args) {
 		
-		try {
+		try {		
 			Doctor d = DoctorDaoHibernate.getInstance().find(6l);
-			System.err.println(d.getFirstName());
-			for(Patient s : PatientDaoHibernate.getInstance().findAllByDoctor(d)) {
-				System.err.println(s.getFirstName());
-			}
+			VisitDaoHibernate.getInstance().findAllByDoctor(d, new Date(2012, 1, 1), new Date(2012, 12 , 31));
+			//System.err.println(d.getFirstName());s
+			//for(Patient s : PatientDaoHibernate.getInstance().findAllByDoctor(d)) {
+			//	System.err.println(s.getFirstName());
+			//}
 			//PatientDaoHibernate.getInstance().find(1l);
 			//SpecialtyDaoHibernate.getInstance().find(1l);
 			//TitleDaoHibernate.getInstance().find(1l);
