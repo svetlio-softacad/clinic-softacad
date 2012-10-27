@@ -6,8 +6,6 @@ import dao.DaoFactory;
 import dao.DataAccessException;
 import entity.Doctor;
 import entity.Patient;
-import entity.Specialty;
-import entity.Visit;
 import util.HibernateUtil;
 import util.dao.DaoFactoryHibernate;
 
@@ -22,21 +20,25 @@ public class Runner {
 			DaoFactory factory = DaoFactoryHibernate.getInstance();
 			Doctor d = factory.getDoctorsDao().find(6l);
 			factory.getVisitsDao().findAllByDoctor(d, new Date(2012, 1, 1), new Date(2012, 12 , 31));
-			//System.err.println(d.getFirstName());s
-			//for(Patient s : PatientDaoHibernate.getInstance().findAllByDoctor(d)) {
-			//	System.err.println(s.getFirstName());
-			//}
-			//PatientDaoHibernate.getInstance().find(1l);
-			//SpecialtyDaoHibernate.getInstance().find(1l);
-			//TitleDaoHibernate.getInstance().find(1l);
-			//VisitDaoHibernate.getInstance().find(1l);
-			//DoctorDaoHibernate.getInstance().getAll();
-			//PatientDaoHibernate.getInstance().getAll();
-			//TitleDaoHibernate.getInstance().getAll();
-			//SpecialtyDaoHibernate.getInstance().getAll();
-			//VisitDaoHibernate.getInstance().getAll();
+			System.err.println(d.getFirstName());
+			/*
+			for(Patient s : factory.getPatientsDao().findAllByDoctor(d)) {
+				System.err.println(s.getFirstName());
+			}
+			
+			factory.getDoctorsDao().find(1l);
+			factory.getPatientsDao().find(1l);
+			factory.getSpecialtiesDao().find(1l);
+			factory.getTitlesDao().find(1l);
+			factory.getVisitsDao().find(1l);
+			
+			factory.getDoctorsDao().getAll();
+			factory.getPatientsDao().getAll();
+			factory.getSpecialtiesDao().getAll();
+			factory.getSpecialtiesDao().getAll();
+			factory.getVisitsDao().getAll();*/
+			
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			HibernateUtil.closeSessionFactory();

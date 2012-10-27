@@ -73,30 +73,18 @@ public class GenericDaoHibernate<T extends Persistable> implements Daoable<T> {
 
 	@Override
 	public void save(T entity) throws DataAccessException {
-
 		Session session = HibernateUtil.getSession();
-
 		try {
-
 			logger.info("Saving " + this.pojoClass.getCanonicalName()
-
 					+ " instance");
-
 			session.beginTransaction();
-
 			session.saveOrUpdate(entity);
-
 			session.getTransaction().commit();
-
 		} catch (HibernateException e) {
-
 			session.getTransaction().rollback();
-
 			logger.error(
 					"Error while saving entity of class "
-
 							+ this.pojoClass.getCanonicalName(), e);
-
 			throw new DataAccessException("Error while saving entity", e);
 		}
 	}

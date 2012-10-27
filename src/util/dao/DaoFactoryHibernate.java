@@ -3,6 +3,8 @@ package util.dao;
 import dao.DaoFactory;
 import dao.DoctorsDao;
 import dao.PatientsDao;
+import dao.SepcialtiesDao;
+import dao.TitlesDao;
 import dao.VisitsDao;
 
 public class DaoFactoryHibernate implements DaoFactory {
@@ -33,6 +35,18 @@ public class DaoFactoryHibernate implements DaoFactory {
 	@Override
 	public VisitsDao getVisitsDao() {
 		return VisitDaoHibernate.getInstance();
+	}
+
+	@Override
+	public SepcialtiesDao getSpecialtiesDao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TitlesDao getTitlesDao() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

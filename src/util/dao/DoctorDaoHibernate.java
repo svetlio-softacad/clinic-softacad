@@ -28,7 +28,6 @@ public class DoctorDaoHibernate extends GenericDaoHibernate<Doctor> implements D
 
 	@Override
 	public Set<Doctor> findAllByPatient(final Patient patient, Date from, Date to) throws DataAccessException {
-		//return findByConditionsWithOther("select d from Doctor d inner join d.visits v where v.patient.id = :id", patient.getId());
 		return findByCallback(new DaoCallBackVisitor() {
 			
 			@Override
