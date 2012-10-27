@@ -2,17 +2,14 @@ package runner;
 
 import java.util.Date;
 
+import dao.DaoFactory;
 import dao.DataAccessException;
 import entity.Doctor;
 import entity.Patient;
 import entity.Specialty;
 import entity.Visit;
 import util.HibernateUtil;
-import util.dao.DoctorDaoHibernate;
-import util.dao.PatientDaoHibernate;
-import util.dao.SpecialtyDaoHibernate;
-import util.dao.TitleDaoHibernate;
-import util.dao.VisitDaoHibernate;
+import util.dao.DaoFactoryHibernate;
 
 public class Runner {
 
@@ -21,9 +18,10 @@ public class Runner {
 	 */
 	public static void main(String[] args) {
 		
-		try {		
-			Doctor d = DoctorDaoHibernate.getInstance().find(6l);
-			VisitDaoHibernate.getInstance().findAllByDoctor(d, new Date(2012, 1, 1), new Date(2012, 12 , 31));
+		try {
+			DaoFactory factory = DaoFactoryHibernate.getInstance();
+			Doctor d = factory.getDoctorsDao().find(6l);
+			factory.getVisitsDao().findAllByDoctor(d, new Date(2012, 1, 1), new Date(2012, 12 , 31));
 			//System.err.println(d.getFirstName());s
 			//for(Patient s : PatientDaoHibernate.getInstance().findAllByDoctor(d)) {
 			//	System.err.println(s.getFirstName());
