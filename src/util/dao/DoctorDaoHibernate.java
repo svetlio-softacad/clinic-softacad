@@ -34,27 +34,7 @@ public class DoctorDaoHibernate extends GenericDaoHibernate<Doctor> implements D
 
 	@Override
 	public Set<Doctor> findAllByPatient(Patient patirnt, Date from, Date to) throws DataAccessException {
-		List<Doctor> entities = null;
-		Session session = HibernateUtil.getSession();
-		try {
-			logger.info("Fetching all instances of "
-					+ this.pojoClass.getCanonicalName());
-			session.beginTransaction();
-			Query query = session.createQuery("from "
-					+ this.pojoClass.getName());
-			entities = query.list();
-			if (entities == null) {
-				entities = Collections.emptyList();
-			}
-			logger.debug("A total of " + entities.size() + " fetched");
-			session.getTransaction().commit();
-		} catch (HibernateException e) {
-			session.getTransaction().rollback();
-			logger.error("Error while fetching all entities of class "
-					+ this.pojoClass.getCanonicalName(), e);
-			throw new DataAccessException("Error while fetching entities", e);
-		}
-		return new HashSet<Doctor>(entities);
+		return findByConditionsWithOther("from Doctor d join visits v where v.patient.id = :id", patirnt.getId());
 	}
 
 }

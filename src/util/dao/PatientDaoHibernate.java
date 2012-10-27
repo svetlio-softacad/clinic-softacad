@@ -2,6 +2,7 @@ package util.dao;
 
 import java.util.Set;
 
+import dao.DataAccessException;
 import dao.PatientsDao;
 import entity.Doctor;
 import entity.Patient;
@@ -22,9 +23,8 @@ public class PatientDaoHibernate extends GenericDaoHibernate<Patient> implements
 	}
 
 	@Override
-	public Set<Patient> findAllByDoctor(Doctor doctor) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Patient> findAllByDoctor(Doctor doctor) throws DataAccessException {
+		return findByConditionsWithOther("from Patient p join visits v where v.patient.id = :id", doctor.getId());
 	}
 
 	@Override
