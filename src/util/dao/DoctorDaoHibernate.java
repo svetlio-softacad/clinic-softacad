@@ -33,7 +33,7 @@ public class DoctorDaoHibernate extends GenericDaoHibernate<Doctor> implements D
 	}
 
 	@Override
-	public Set<Doctor> find_all_by_patient(Patient patirnt, Date from, Date to) throws DataAccessException {
+	public Set<Doctor> findAllByPatient(Patient patirnt, Date from, Date to) throws DataAccessException {
 		List<Doctor> entities = null;
 		Session session = HibernateUtil.getSession();
 		try {
