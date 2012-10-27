@@ -2,6 +2,7 @@ package runner;
 
 import dao.DataAccessException;
 import entity.Doctor;
+import entity.Patient;
 import entity.Specialty;
 import entity.Visit;
 import util.HibernateUtil;
@@ -19,10 +20,10 @@ public class Runner {
 	public static void main(String[] args) {
 		
 		try {
-			Doctor d = DoctorDaoHibernate.getInstance().find(1l);
-			System.out.println(d.getTitle());
-			for(Visit s : d.getVisits()) {
-				System.out.println(s.getDiagnose());
+			Doctor d = DoctorDaoHibernate.getInstance().find(6l);
+			System.err.println(d.getFirstName());
+			for(Patient s : PatientDaoHibernate.getInstance().findAllByDoctor(d)) {
+				System.err.println(s.getFirstName());
 			}
 			//PatientDaoHibernate.getInstance().find(1l);
 			//SpecialtyDaoHibernate.getInstance().find(1l);

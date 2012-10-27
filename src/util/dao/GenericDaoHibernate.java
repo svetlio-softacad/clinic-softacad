@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.security.auth.callback.Callback;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -120,6 +122,8 @@ public class GenericDaoHibernate<T extends Persistable> implements Daoable<T> {
 		}
 	}
 	
+	
+	
 	protected Set<T> findByConditionsWithOther(String hql, long id) throws DataAccessException {
 		List<T> entities = null;
 		Session session = HibernateUtil.getSession();
@@ -127,9 +131,31 @@ public class GenericDaoHibernate<T extends Persistable> implements Daoable<T> {
 			logger.info("Fetching instances of "
 					+ this.pojoClass.getCanonicalName());
 			session.beginTransaction();
-			Query query = session.createQuery("from Doctor d join visits v where v.patient.id = :id");
+			Query query = session.createQuery(hql);
 			query.setLong("id", id);
 			entities = query.list();
+			if (entities == null) {
+				entities = Collections.emptyList();
+			}
+			logger.debug("A total of " + entities.size() + " fetched");
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			session.getTransaction().rollback();
+			logger.error("Error while fetching entities of class "
+					+ this.pojoClass.getCanonicalName(), e);
+			throw new DataAccessException("Error while fetching entities", e);
+		}
+		return new HashSet<T>(entities);
+	}
+	
+	protected Set<T> findByCallback(DaoCallBackVisitor visitor) throws DataAccessException {
+		List<T> entities = null;
+		Session session = HibernateUtil.getSession();
+		try {
+			logger.info("Fetching instances of "
+					+ this.pojoClass.getCanonicalName());
+			session.beginTransaction();			
+			entities = visitor.visit(session).list();
 			if (entities == null) {
 				entities = Collections.emptyList();
 			}
